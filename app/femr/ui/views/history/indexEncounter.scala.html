@@ -203,7 +203,12 @@
                                   @if(prescription.getOriginalMedicationName != null) {
                                       <th><p><del><span>@prescription.getAmount @prescription.getOriginalMedicationName</span></del></p></th>
                                           <!-- viewModelPharmacy.getPrescriptions.get(x - 2) = the new replaced prescription -->
-                                      <th> @viewModelPharmacy.getPrescriptions.get(x - 2).getAmount @outputStringOrNA(prescription.getName)
+                                      <th>@for(index <- 0 until viewModelPharmacy.getPrescriptions.size/2) {
+                                              @if(prescription.getName == viewModelPharmacy.getPrescriptions.get(index).getName) {
+                                                  @viewModelPharmacy.getPrescriptions.get(index).getAmount
+                                              }
+                                          }
+                                          @outputStringOrNA(prescription.getName)
                                           (@outputStringOrNA(prescription.getMedicationForm).toString().trim)
                                           @for(activeDrug <- prescription.getMedicationActiveDrugs) {
                                               <span class='activeDrug'> @activeDrug.getName @activeDrug.getValue @activeDrug.getUnit </span>
