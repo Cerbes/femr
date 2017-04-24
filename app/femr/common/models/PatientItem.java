@@ -19,6 +19,8 @@
 package femr.common.models;
 
 import java.util.Date;
+import femr.util.calculations.dateUtils;
+import femr.util.stringhelpers.StringUtils;
 
 public class PatientItem {
     private int Id;
@@ -51,6 +53,66 @@ public class PatientItem {
         //default empty values
         this.Id = 0;
         this.pathToPhoto = "";
+    }
+
+    public PatientItem(int id,
+                       String firstName,
+                       String lastName,
+                       String phoneNumber,
+                       String city,
+                       String address,
+                       int userId,
+                       Date age,
+                       String sex,
+                       Integer weeksPregnant,
+                       Integer heightFeet,
+                       Integer heightInches,
+                       Float weight,
+                       String pathToPatientPhoto,
+                       Integer photoId) {
+
+        //required fields
+        this.Id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        setYearsOld(dateUtils.getYearsInteger(age));
+        setMonthsOld(dateUtils.getMonthsInteger(age));
+        this.city = city;
+        this.userId = userId;
+        //optional fields
+        if (StringUtils.isNotNullOrWhiteSpace(phoneNumber))
+            this.phoneNumber = phoneNumber;
+        if (StringUtils.isNotNullOrWhiteSpace(address))
+            this.address = address;
+        if (StringUtils.isNotNullOrWhiteSpace(sex))
+            this.sex = sex;
+        if (age != null) {
+
+            setAge(dateUtils.getAge(age));//age (int)
+            this.birth = age;//date of birth(date)
+            setFriendlyDateOfBirth(dateUtils.getFriendlyDate(age));
+
+        }
+        if (StringUtils.isNotNullOrWhiteSpace(pathToPatientPhoto) && photoId != null) {
+
+            this.pathToPhoto = pathToPatientPhoto;
+            this.photoId = photoId;
+        }
+        if (weeksPregnant != null)
+            this.weeksPregnant = weeksPregnant;
+
+        if (heightFeet != null)
+            this.heightFeet = heightFeet;
+        else
+            this.heightFeet = 0;
+
+        if (heightInches != null)
+            this.heightInches = heightInches;
+        else
+            this.heightInches = 0;
+
+        if (weight != null)
+            this.weight = weight;
     }
 
     public int getId() {

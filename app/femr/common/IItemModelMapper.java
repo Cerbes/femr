@@ -108,8 +108,7 @@ public interface IItemModelMapper {
                                   Integer heightInches,
                                   Float weight,
                                   String pathToPatientPhoto,
-                                  Integer photoId,
-                                  String ageClassification);
+                                  Integer photoId);
 
     /**
      * Generate and provide an instance of PatientEncounterItem

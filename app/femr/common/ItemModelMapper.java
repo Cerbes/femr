@@ -172,62 +172,15 @@ public class ItemModelMapper implements IItemModelMapper {
                                                 Integer heightInches,
                                                 Float weight,
                                                 String pathToPatientPhoto,
-                                                Integer photoId,
-                                                String ageClassification) {
+                                                Integer photoId) {
 
         if (StringUtils.isNullOrWhiteSpace(firstName) ||
                 StringUtils.isNullOrWhiteSpace(lastName) ||
                 StringUtils.isNullOrWhiteSpace(city)) {
-
             return null;
+        } else {
+            return new PatientItem(id,firstName,lastName,phoneNumber,city,address,userId,age,sex,weeksPregnant,heightFeet,heightInches,weight,pathToPatientPhoto,photoId);
         }
-
-        PatientItem patientItem = new PatientItem();
-
-        //required fields
-        patientItem.setId(id);
-        patientItem.setFirstName(firstName);
-        patientItem.setLastName(lastName);
-        patientItem.setYearsOld(dateUtils.getYearsInteger(age));
-        patientItem.setMonthsOld(dateUtils.getMonthsInteger(age));
-        patientItem.setCity(city);
-        patientItem.setUserId(userId);
-        //optional fields
-        if (StringUtils.isNotNullOrWhiteSpace(phoneNumber))
-            patientItem.setPhoneNumber(phoneNumber);
-        if (StringUtils.isNotNullOrWhiteSpace(address))
-            patientItem.setAddress(address);
-        if (StringUtils.isNotNullOrWhiteSpace(sex))
-            patientItem.setSex(sex);
-        if (age != null) {
-
-            patientItem.setAge(dateUtils.getAge(age));//age (int)
-            patientItem.setBirth(age);//date of birth(date)
-            patientItem.setFriendlyDateOfBirth(dateUtils.getFriendlyDate(age));
-
-        }
-        if (StringUtils.isNotNullOrWhiteSpace(pathToPatientPhoto) && photoId != null) {
-
-            patientItem.setPathToPhoto(pathToPatientPhoto);
-            patientItem.setPhotoId(photoId);
-        }
-        if (weeksPregnant != null)
-            patientItem.setWeeksPregnant(weeksPregnant);
-
-        if (heightFeet != null)
-            patientItem.setHeightFeet(heightFeet);
-        else
-            patientItem.setHeightFeet(0);
-
-        if (heightInches != null)
-            patientItem.setHeightInches(heightInches);
-        else
-            patientItem.setHeightInches(0);
-
-        if (weight != null)
-            patientItem.setWeight(weight);
-
-        return patientItem;
     }
 
     /**
@@ -259,7 +212,6 @@ public class ItemModelMapper implements IItemModelMapper {
                 patientEncounter.getPatient().getUserId(),
                 patientEncounter.getPatient().getAge(),
                 patientEncounter.getPatient().getSex(),
-                null,
                 null,
                 null,
                 null,
